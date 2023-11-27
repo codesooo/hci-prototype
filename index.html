@@ -45,6 +45,8 @@ mark {
   background: #77bdff90;
 }
         </style>
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       </head>
   <body>
     <nav class="navbar bg-body-tertiary mb-3 ">
@@ -157,7 +159,12 @@ mark {
                  autocomplete="off"></textarea>
                  <div class="autocomplete"></div>
             </div>
+            <button type="button" onclick="location.href='#'" id="moreDetailChat" class="btn btn-primary" style="float: right;">완료</button>
+            <div>
+                  <span id="chatArea"></span>
           </div>
+          </div>
+          
           
           <div class="col mt-1">
             <div class="">
@@ -184,6 +191,8 @@ mark {
         </div>
       </div>
       <script>
+
+        /* 자동완성 코드*/
         const dataList = ["지하철", "지하철 파업", "출석", "출석 인정", "병결", "결석"];
   
         const $search = document.querySelector("#search");
@@ -270,6 +279,9 @@ mark {
             }
           });
         };
+        /**/
+
+
 
         // 이메일을 보낼 때 필요한 정보(이메일, 제목, 내용)를 서버로 전달하는 함수
         function sendEmail() {
@@ -296,6 +308,26 @@ mark {
                 console.error('이메일 전송 중 오류 발생:', error);
             });
         }
+
+        /* 챗봇 파일(moreDetail.html) 불러오기*/
+
+        $(document).ready(function() {
+        $("#moreDetailChat").click(function() {
+            $.ajax({
+                url : "moreDetail.html",
+                success : function(result) {
+                    $("#chatArea").html(result);
+                    
+                },
+                error: function (request, status, error) {
+        console.log("code: " + request.status)
+        console.log("message: " + request.responseText)
+        console.log("error: " + error);
+    }
+            });
+        });
+    });
+
       </script>
   </body>
   
