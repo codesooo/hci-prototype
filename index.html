@@ -191,12 +191,12 @@
           
           <div class="col mt-1">
             <div class="">
-              <label for="title" class="form-label"></label>
+              <label for="mailSubject" class="form-label"></label>
               <textarea class="form-control" id="mailSubject" rows="2"
               placeholder="제목" style="font-size: 1.2em;"></textarea>
             </div>
             <div class="mb-3">
-              <label for="mailResult" class="form-label"></label>
+              <label for="mailContent" class="form-label"></label>
               <textarea class="form-control" id="mailContent" rows="26"></textarea>
             </div>
 
@@ -312,8 +312,8 @@
         // 이메일을 보낼 때 필요한 정보(이메일, 제목, 내용)를 서버로 전달하는 함수
         function sendEmail() {
             const toEmail = document.getElementById('InputEmail').value;
-            const title = document.getElementById('title').value;
-            const body = document.getElementById('mailResult').value;
+            const title = document.getElementById('mailSubject').value;
+            const body = document.getElementById('mailContent').value;
 
             fetch('/send-email', {
                 method: 'POST',
@@ -359,8 +359,6 @@
             }
             else if (situ.includes("예비군")){
               loadMoreDetail("moreDetail.html");
-              
-              
             }
             else if (situ.includes("시험지 확인")){
               loadMoreDetail("moreDetail2.html");
@@ -374,6 +372,8 @@
                 url: url,
                 success: function(result) {
                     $("#chatArea").html(result);
+                    var elementValue = $("#mailContent").text();
+                    window.parent.postMessage({ idValue: elementValue }, '*');
                     
                 },
                 error: function(request, status, error) {
@@ -385,190 +385,7 @@
         }
 
           }
-
-        //    var trainingDateInfo = ''; // 훈련 날짜 및 기간 저장 변수
-        //     var teammateInfo = ''; // 비협조적인 팀원 정보 저장 변수
-
-        //     function typeWriter(textarea, content, index) {
-        //   if (index < content.length) {
-        //     textarea.value += content.charAt(index);
-        //     index++;
-        //     setTimeout(function () {
-        //       typeWriter(textarea, content, index);
-        //     }, 10); // 10밀리초마다 한 글자씩 추가
-        //   }
-        // } 
-
-    //  function showAdditionalDetails() {
-    //     var situation = document.querySelector('input[name="situation"]:checked');
-    //     var details = document.getElementById('details').value;
-
-    //     if (!situation) {
-    //       alert("상황을 선택하세요.");
-    //       return;
-    //     }
-
-    //     // 추가적인 세부 사항 입력란을 동적으로 생성합니다.
-    //     var additionalDetailsContainer = document.getElementById('additionalDetails');
-    //     additionalDetailsContainer.innerHTML = ''; // 기존 내용 초기화
-
-    //     var trainingDateTextarea, teammateInfoTextarea; // 변수를 여기에서 선언
-
-    //     if (situation.value === 'gradeInquiry' && details === '예비군 훈련으로 인한 시험 불참') {
-    //       trainingDateTextarea = document.createElement('textarea');
-    //       trainingDateTextarea.name = 'trainingDate';
-    //       trainingDateTextarea.className = 'form-control';
-    //       trainingDateTextarea.placeholder = '훈련 날짜 및 기간을 입력해주세요.';
-    //       additionalDetailsContainer.appendChild(trainingDateTextarea);
-    //     } else if (situation.value === 'gradeInquiry' && details === '비협조적인 팀원') {
-    //       teammateInfoTextarea = document.createElement('textarea');
-    //       teammateInfoTextarea.name = 'teammateInfo';
-    //       teammateInfoTextarea.className = 'form-control';
-    //       teammateInfoTextarea.placeholder = '비협조적인 팀원의 [학과] [학번] [이름]을 입력해주세요.';
-    //       additionalDetailsContainer.appendChild(teammateInfoTextarea);
-    //     } else if (situation.value === 'gradeInquiry' && details === '시험지 확인') {
-    //       checkExamPaperTextarea = document.createElement('textarea');
-    //       checkExamPaperTextarea.name = 'checkExamPaper';
-    //       checkExamPaperTextarea.className = 'form-control';
-    //       checkExamPaperTextarea.placeholder = '확인하고자 하는 시험이 중간고사인지 기말고사인지 알려주세요.';
-    //       additionalDetailsContainer.appendChild(checkExamPaperTextarea);
-    //     } else if (situation.value === 'attendanceInquiry' && details === '지하철 파업으로 인한 지각') {
-    //       checkSubwayTextarea = document.createElement('textarea');
-    //       checkSubwayTextarea.name = 'subwayInfo';
-    //       checkSubwayTextarea.className = 'form-control';
-    //       checkSubwayTextarea.placeholder = '지하철 노선과 탑승한 시간대를 알려주세요.';
-    //       additionalDetailsContainer.appendChild(checkSubwayTextarea);
-    //     }
-    //     // 다른 상황 및 세부사항에 대한 추가적인 처리를 여기에 추가
-
-    //     // 입력받은 값을 전역 변수에 저장
-    //     trainingDateInfo = trainingDateTextarea ? trainingDateTextarea.value : '';
-    //     teammateInfo = teammateInfoTextarea ? teammateInfoTextarea.value : '';
-    //     examInfo = checkExamPaperTextarea ? checkExamPaperTextarea.value : '';
-    //     subwayInfo = checkSubwayTextarea ? checkSubwayTextarea.value : '';
-    //   } 
-
-      function generateMail() {
-        // var name = document.getElementById('InputName').value;
-        // console.log("inputName:",name);
-        // var studentId = document.getElementById('InputNum').value;
-        // var major = document.getElementById('InputMajor').value;
-        // var lecture = document.getElementById('InputLecture').value;
-        // var recipientName = document.getElementById('InputToName').value;
-        // var recipientEmail = document.getElementById('InputEmail').value;
-
-    //     var situation = document.querySelector('input[name="situation"]:checked');
-    //     var details = document.getElementById('details').value;
-
-    //     if (!situation) {
-    //       alert("상황을 선택하세요.");
-    //       return;
-    //     }
-
-        
-
-        // var tone = document.querySelector('input[name="btnradio"]:checked').id === 'btnradio1' ? '정중한' : '친근한';
-    //     if (situation.value === 'gradeInquiry' && details === '비협조적인 팀원') {
-    //       var teammateInfo = document.getElementById('additionalDetails').querySelector('textarea[name="teammateInfo"]').value;
-    //       var mailSubject = "성적 문의" + "| " + major + " " + studentId + " " + name + " 입니다.";
-    //       if (tone === '정중한') {
-    //       var mailContent = "- " + recipientName + " 교수님께. \n\n안녕하세요, " + recipientName + " 교수님.\n\n";
-    //       mailContent += "저는 " + lecture + "을(를) 수강하고 있는 " + major + " " + studentId + " " + name + " 입니다.\n";
-    //       mailContent += "다름이 아니라, 팀 프로젝트를 진행하는 중 문제가 생겨 연락 드렸습니다.";
-    //       mailContent += " 저희 팀원 중 한 명인 " + teammateInfo + " 학생이 비협조적인 행동을 보여 프로젝트 진행에 차질이 생겼습니다. ";
-    //       mailContent += "프로젝트에 동참을 유도하기 위해 개인적으로 연락을 몇 번 시도했으나, ";
-    //       mailContent += "여전히 비협조적인 모습을 보이고 있습니다.\n\n";
-    //       mailContent += "따라서 " + teammateInfo + " 학생의 태도를 프로젝트의 개별 성과에 반영해주시면 좋겠습니다."; 
-    //       mailContent += "\n바쁘신 와중에 메일 읽어주셔서 감사합니다. \n날이 추운데 감기 조심하시기 바랍니다.\n\n";
-    //       }
-    //       else if (tone === '친근한') {
-    //           var mailContent = "- " + recipientName + " 교수님께. \n\n교수님, 안녕하세요!\n\n";
-    //           mailContent += lecture + "을(를) 수강 중인 " + major + " " + studentId + " " + name + " 입니다.\n";
-    //           mailContent += "다름이 아니라, 팀 프로젝트를 진행하는 중 문제가 생겨 연락 드리게 되었어요.\n\n";
-    //           mailContent += "저희 팀원 중 한 명인 " + teammateInfo + " 학생이 비협조적인 행동을 보여 프로젝트 진행에 차질이 생겼습니다.";
-    //           mailContent += " 프로젝트에 동참을 유도하기 위해 개인적으로 연락을 몇 번 시도했으나, 여전히 비협조적인 모습을 보이고 있습니다.\n";
-    //           mailContent += "혹시 이에 대해 조언이나 지도해 주실 수 있을까요?\n";
-    //           mailContent += "그리고 학생의 태도를 프로젝트의 개별 성과에 반영해주시길 원합니다.\n";
-    //           mailContent += "\n바쁘신 와중에 메일 읽어주셔서 감사합니다!\n날이 추운데 감기 조심하시고 좋은 하루 보내세요 :)\n\n";
-    //       }
-    //     } else if (situation.value === 'gradeInquiry' && details === '예비군 훈련으로 인한 시험 불참') {
-    //       var trainingDateInfo = document.getElementById('additionalDetails').querySelector('textarea[name="trainingDate"]').value;
-    //       var mailSubject = "성적 문의" + "| " + major + " " + studentId + " " + name + " 입니다.";
-    //       if (tone === '정중한') {
-    //       var mailContent = "- " + recipientName + " 교수님께. \n\n안녕하세요, " + recipientName + " 교수님.\n\n";
-    //       mailContent += "저는 " + lecture + "을(를) 수강하고 있는 " + major + " " + studentId + " " + name + " 입니다.\n";
-    //       mailContent += "이번 예비군 훈련으로 인해 " + trainingDateInfo + " 동안 군 복무 의무를 수행해야 합니다.\n";
-    //       mailContent += "제가 참여하는 예비군 훈련이 기말고사 시험과 겹쳐서 시험을 보지 못할 것 같습니다.";
-    //       mailContent += "이와 관련하여 몇 가지 질문 사항이 있어 연락 드립니다.\n\n";
-    //       mailContent += "1. 예비군 훈련으로 인해 시험에 불이익을 받지 않도록 하기 위해 필요한 조치가 있을까요?\n";
-    //       mailContent += "2. 다른 날에 따로 시험을 봐도 괜찮을까요?\n\n";
-    //       mailContent += "또한 군 복무와 관련된 서류 또는 확인서가 필요하다면 즉시 제출하도록 하겠습니다.\n";
-    //       mailContent += "\n바쁘신 와중에 메일 읽어주셔서 감사합니다.\n날이 추운데 감기 조심하시기 바랍니다.\n\n";
-    //       }
-          
-    //       else if (tone === '친근한') {
-    //         var mailContent = "- " + recipientName + " 교수님께. \n\n교수님, 안녕하세요!\n\n";
-    //         mailContent += lecture + "을(를) 수강 중인 " + major + " " + studentId + " " + name + " 입니다.\n";
-    //         mailContent += "이번 예비군 훈련으로 인해 " + trainingDateInfo + " 동안 군 복무 의무를 수행해야 합니다.\n";
-    //         mailContent += "제가 참여하는 예비군 훈련이 기말고사 시험과 겹쳐서 시험을 보지 못할 것 같습니다. ";
-    //         mailContent += "이와 관련하여 몇 가지 질문 사항이 있어 연락 드립니다!\n\n";
-    //         mailContent += "1. 예비군 훈련으로 인해 시험에 불이익을 받지 않도록 하기 위해 필요한 조치가 있을까요?\n";
-    //         mailContent += "2. 다른 날에 따로 시험을 봐도 괜찮을까요?\n\n";
-    //         mailContent += "또한 군 복무와 관련된 서류 또는 확인서가 필요하다면 즉시 제출하도록 하겠습니다.\n";
-    //         mailContent += "\n바쁘신 와중에 메일 읽어주셔서 감사합니다!\n날이 추운데 감기 조심하시고 좋은 하루 보내세요 :)\n\n";
-    //       }
-    //     } else if (situation.value === 'gradeInquiry' && details === '시험지 확인') {
-    //       var examInfo = document.getElementById('additionalDetails').querySelector('textarea[name="checkExamPaper"]').value;
-    //       var mailSubject = "시험 관련 문의" + "| " + major + " " + studentId + " " + name + " 입니다.";
-    //       if (tone === '정중한') {
-    //       var mailContent = "- " + recipientName + " 교수님께. \n\n안녕하세요, " + recipientName + " 교수님.\n\n";
-    //       mailContent += "저는 " + lecture + "을(를) 수강하고 있는 " + major + " " + studentId + " " + name + " 입니다.\n";
-    //       mailContent += "이번 학기 " + examInfo + " 성적이 제가 예상한 것보다 낮아서 어떤 부분에서 부족했는지 알고 싶어서 연락 드립니다.\n";
-    //       mailContent += examInfo + " 시험지를 확인하게 해주신다면 앞으로 부족한 부분을 보완하여 공부하도록 하겠습니다.\n";
-    //       mailContent += "\n바쁘신 와중에 메일 읽어주셔서 감사합니다. \n날이 추운데 감기 조심하시기 바랍니다.\n\n";
-    //      }
-    //       else if (tone === '친근한') {
-    //         var mailContent = "- " + recipientName + " 교수님께. \n\n교수님, 안녕하세요!\n\n";
-    //         mailContent += lecture + "을(를) 수강 중인 " + major + " " + studentId + " " + name + " 입니다.\n";
-    //         mailContent += "이번 학기 " + examInfo + " 성적이 제가 예상한 것보다 낮아서 어떤 부분에서 부족했는지 알고 싶어서 연락 드리게 되었어요!\n";
-    //         mailContent += examInfo + " 시험지를 확인하게 해주신다면 앞으로 부족한 부분을 보완하여 열심히 공부하겠습니다 :)\n";
-    //         mailContent += "\n바쁘신 와중에 메일 읽어주셔서 감사합니다!\n날이 추운데 감기 조심하시고 좋은 하루 보내세요 :)\n\n";
-    //       }
-    //     } else if (situation.value === 'attendanceInquiry' && details === '지하철 파업으로 인한 지각') {
-    //       var subwayInfo = document.getElementById('additionalDetails').querySelector('textarea[name="subwayInfo"]').value;
-    //       var mailSubject = "시험 관련 문의" + "| " + major + " " + studentId + " " + name + " 입니다.";
-    //       if (tone === '정중한') {
-    //       var mailContent = "- " + recipientName + " 교수님께. \n\n안녕하세요, " + recipientName + " 교수님.\n\n";
-    //       mailContent += "저는 " + lecture + "을(를) 수강하고 있는 " + major + " " + studentId + " " + name + " 입니다.\n";
-    //       mailContent += "오늘 철도노조 파업으로 인해 지하철이 연착되어 수업에 늦게 도착할 것 같아 연락 드립니다.\n";
-    //       mailContent += "제가 탑승한 지하철 정보는 다음과 같습니다. : " + subwayInfo + "\n";
-    //       mailContent += "지연증명서를 발급받아 교수님께 제출하면 지각 인정이 가능할지 문의 드립니다.\n";
-    //       mailContent += "\n바쁘신 와중에 메일 읽어주셔서 감사합니다. \n날이 추운데 감기 조심하시기 바랍니다.\n\n";
-    //      }
-    //       else if (tone === '친근한') {
-    //         var mailContent = "- " + recipientName + " 교수님께. \n\n교수님, 안녕하세요!\n\n";
-    //         mailContent += lecture + "을(를) 수강 중인 " + major + " " + studentId + " " + name + " 입니다.\n";
-    //         mailContent += "오늘 철도노조 파업으로 인해 지하철이 연착되어 수업에 늦게 도착할 것 같아 연락 드립니다.\n\n";
-    //         mailContent += "발급받아 교수님께 제출하면 지각 인정이 가능할까요?\n";
-    //         mailContent += "제가 탑승한 지하철 정보는 다음과 같습니다. : " + subwayInfo + "\n";
-    //         mailContent += "\n바쁘신 와중에 메일 읽어주셔서 감사합니다!\n날이 추운데 감기 조심하시고 좋은 하루 보내세요 :)\n\n";
-    //       }
-    //     }
-    //     // 다른 상황에 대한 메일 내용 추가
-
-    //     mailContent += "- " + name + " 드림."; 
-
-        
-
-    // mailSubjectTextarea = document.getElementById('mailSubject');
-    // mailContentTextarea = document.getElementById('mailContent');
-
-    // mailSubjectTextarea.value = mailSubject;
-    // mailContentTextarea.value = '';
-    // // 문자열을 한 글자씩 나타내는 타이핑 효과 함수 호출
-    // typeWriter(mailContentTextarea, mailresult, 0);
-    //     }
-
+    
       </script>
   </body>
   
