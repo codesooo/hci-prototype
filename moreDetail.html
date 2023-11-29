@@ -20,7 +20,8 @@
             <div id="result" class="alert alert-secondary" role="alert" style="display: none;"></div>
         </div>
     </div>
-    <div class="input-group mb-3" style="bottom: 0px; position: absolute;	width: 59rem;">
+    <!-- <div class="input-group mb-3" style="bottom: 0px; position: absolute;	width: 59rem;"> -->
+        <div class="input-group mb-3">
         <input id="moreDetailInput" type="text" class="form-control" placeholder="입력해주세요" aria-describedby="">
         <button onclick="printInput()" class="btn btn-outline-primary" type="button" id="df">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
@@ -99,11 +100,13 @@
                     mailSubjectTextarea = document.getElementById('mailSubject');
                     mailContentTextarea = document.getElementById('mailContent');
 
-                    mailSubjectTextarea.value = mailSubject;
+                    // mailSubjectTextarea.value = mailSubject;
                     mailContentTextarea.value = '';
                     // 문자열을 한 글자씩 나타내는 타이핑 효과 함수 호출
-                    typeWriter(mailContentTextarea, mailresult, 0);
-                }
+                    setTimeout(function () {
+                            mailSubjectTextarea.value = mailSubject;
+                            typeWriter(mailContentTextarea, mailresult, 0);
+                            }, 2000);                }
 
                     
 
