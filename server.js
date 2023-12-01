@@ -7,8 +7,9 @@ const port = 3000;
 
 app.use(bodyParser.json());
 app.use(express.static('./'));
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+app.get('/bootstrap/css/bootstrap.min.css', (req, res) => {
+    res.type('text/css');
+    res.sendFile(__dirname + '/node_modules/bootstrap/dist/css/bootstrap.min.css');
 });
 
 app.post('/send-email', (req, res) => {
